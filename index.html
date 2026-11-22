@@ -10,8 +10,6 @@
   #preloader{ display:none !important; }
   .reveal, .reveal-word{ opacity:1 !important; transform:none !important; }
   #bg-canvas{ display:none !important; }
-  body{ cursor:auto !important; }
-  #cursor-dot, #cursor-ring{ display:none !important; }
 </style></noscript>
 <style>
   :root[data-theme="dark"]{
@@ -66,9 +64,6 @@
 
   .wrap{ max-width:1120px; margin:0 auto; padding:0 28px; position:relative; z-index:2; }
 
-  @media (hover:hover){
-    body.custom-cursor-active, body.custom-cursor-active a, body.custom-cursor-active button{ cursor:none; }
-  }
 
   /* ---------- SCROLL PROGRESS ---------- */
   #progress-bar{
@@ -92,11 +87,13 @@
   #preloader .pbar{ width:220px; height:2px; background:var(--border); margin-top:24px; overflow:hidden; border-radius:2px; }
   #preloader .pbar-fill{ height:100%; width:0%; background:linear-gradient(90deg, var(--accent), var(--accent-2)); }
 
-  /* ---------- CUSTOM CURSOR ---------- */
-  #cursor-dot, #cursor-ring{ position:fixed; top:0; left:0; z-index:90; pointer-events:none; border-radius:50%; transform:translate(-50%,-50%); }
-  #cursor-dot{ width:6px; height:6px; background:var(--accent); opacity:0; transition:opacity .2s; }
-  #cursor-ring{ width:32px; height:32px; border:1px solid var(--accent); opacity:0; transition:opacity .2s, width .25s, height .25s, background .25s; }
-  #cursor-ring.grow{ width:60px; height:60px; background:var(--accent-soft); }
+  /* ---------- CURSOR: macOS-style arrow + pointing hand ---------- */
+  :root{
+    --cursor-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M4.5 2.5v17.2l4.2-3.9 2.9 6.4 2.9-1.3-2.9-6.3h5.9z' fill='black' stroke='white' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 5 3, default;
+    --cursor-hand: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M11 3.2c-1 0-1.8.8-1.8 1.8v8.3l-1.5-1.3c-.7-.6-1.8-.5-2.4.2-.6.7-.5 1.7.2 2.3l4.9 5.2c1 1.3 2.4 2 4 2h2.3c2.8 0 5-2.2 5-5v-5.4c0-1-.8-1.7-1.7-1.7-.4 0-.8.1-1.1.4-.2-.8-.9-1.3-1.7-1.3-.5 0-.9.2-1.2.5-.3-.7-.9-1.1-1.7-1.1-.3 0-.6.1-.8.2V5c0-1-.8-1.8-1.8-1.8z' fill='white' stroke='black' stroke-width='1.3' stroke-linejoin='round'/%3E%3C/svg%3E") 11 3, pointer;
+  }
+  html, body{ cursor:var(--cursor-arrow); }
+  a, button, .btn, #theme-toggle, .project-link{ cursor:var(--cursor-hand); }
 
   /* ---------- BACKGROUND ---------- */
   #bg-canvas{ position:fixed; inset:0; z-index:0; width:100%; height:100%; opacity:0.4; pointer-events:none; transition:opacity .4s ease; }
@@ -137,7 +134,7 @@
     width:36px; height:36px; border-radius:50%;
     background:var(--surface); border:1px solid var(--border);
     display:flex; align-items:center; justify-content:center;
-    cursor:pointer; transition:background .2s, transform .2s;
+    transition:background .2s, transform .2s;
     color:var(--text);
   }
   #theme-toggle:hover{ transform:scale(1.08); background:var(--surface-strong); }
@@ -193,7 +190,7 @@
   @media (max-width:860px){
     .hero-grid{ grid-template-columns:1fr; gap:36px; }
     .hero-photo-wrap{ order:-1; }
-    .hero-photo{ max-width:220px; }
+    .hero-photo{ max-width:240px; }
   }
   .hero-kicker{ font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent); margin-bottom:20px; letter-spacing:0.05em; }
   h1.name{ font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:-0.035em; font-size:clamp(42px,8.5vw,96px); line-height:1.0; margin-bottom:26px; overflow:hidden; }
@@ -336,8 +333,6 @@
   <div class="plabel">LOADING PORTFOLIO</div>
 </div>
 
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
 
 <canvas id="bg-canvas"></canvas>
 <div class="dot-grid"></div>
@@ -350,7 +345,8 @@
       <li><a href="#now">Now</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="#process">Process</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#leadership">Leadership</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="right">
@@ -367,13 +363,13 @@
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <div class="hero-kicker mono">SOFTWARE ENGINEERING STUDENT — 7TH SEMESTER</div>
+        <div class="hero-kicker mono">SOFTWARE ENGINEERING STUDENT — 7TH SEMESTER · GRADUATING JUN 2027</div>
         <h1 class="name">
           <span class="row"><span class="reveal-word">Building</span></span><br>
           <span class="row"><span class="reveal-word">systems</span> <span class="reveal-word accent-word">that</span></span><br>
           <span class="row"><span class="reveal-word accent-word">work.</span></span>
         </h1>
-        <p class="tagline reveal">I'm <strong>Sibtain Abbas</strong> — a Software Engineering student with hands-on basics in <strong>Java, C++, Python, and SQL</strong>, built through university coursework and semester projects. Currently looking for an internship in mobile or web development to grow further.</p>
+        <p class="tagline reveal">I'm <strong>Sibtain Abbas</strong> — a Software Engineering undergraduate at SZABIST Islamabad with a foundation in <strong>C++, Java, SQL, and web &amp; app development</strong>, currently building an <strong>AI-powered air-quality advisor</strong> as my final-year project. Looking for internships in software engineering, scientific computing, and applied AI.</p>
         <div class="cta-row reveal">
           <a class="btn primary" href="https://github.com/Sibtain2005" target="_blank" rel="noopener">View my work</a>
           <a class="btn ghost" href="#contact">Get in touch</a>
@@ -388,8 +384,8 @@
   </div>
   <div class="marquee-wrap">
     <div class="marquee mono">
-      <span>JAVA <em>•</em> C++ <em>•</em> PYTHON <em>•</em> SQL <em>•</em> OOP <em>•</em> DATA STRUCTURES <em>•</em> GIT &amp; GITHUB <em>•</em> JAVA SWING <em>•</em></span>
-      <span>JAVA <em>•</em> C++ <em>•</em> PYTHON <em>•</em> SQL <em>•</em> OOP <em>•</em> DATA STRUCTURES <em>•</em> GIT &amp; GITHUB <em>•</em> JAVA SWING <em>•</em></span>
+      <span>C++ <em>•</em> JAVA <em>•</em> PYTHON <em>•</em> JAVASCRIPT <em>•</em> REACT <em>•</em> FLUTTER <em>•</em> FIREBASE <em>•</em> SQL &amp; POSTGRESQL <em>•</em> OOP <em>•</em> DATA STRUCTURES <em>•</em> GIT &amp; GITHUB <em>•</em></span>
+      <span>C++ <em>•</em> JAVA <em>•</em> PYTHON <em>•</em> JAVASCRIPT <em>•</em> REACT <em>•</em> FLUTTER <em>•</em> FIREBASE <em>•</em> SQL &amp; POSTGRESQL <em>•</em> OOP <em>•</em> DATA STRUCTURES <em>•</em> GIT &amp; GITHUB <em>•</em></span>
     </div>
   </div>
 </header>
@@ -402,15 +398,15 @@
     </div>
     <div class="about-grid reveal">
       <div class="about-text">
-        <p>I'm <strong>Sibtain Abbas</strong>, a 7th semester Software Engineering student who likes figuring out how things work by building them — one project at a time.</p>
-        <p>My foundation comes from university coursework and semester projects: I know the <strong>basics of Java</strong>, have a decent grip on <strong>OOP and Data Structures through C++</strong>, and picked up <strong>SQL basics</strong> along the way. Gaming is a big part of what pushes me to build — it's why I built my own car racing game instead of just playing someone else's.</p>
-        <p>I recently started learning <strong>Python</strong> through a course at NAVTEC, and I'm looking for an internship in <strong>mobile or web development</strong> to build on these fundamentals with real-world experience.</p>
+        <p>I'm <strong>Sibtain Abbas</strong>, a 7th semester Software Engineering student at SZABIST University Islamabad (graduating June 2027) who likes figuring out how things work by building them — one project at a time.</p>
+        <p>My foundation comes from coursework in <strong>Data Structures, OOP, Database Systems, Linear Algebra, Probability, and Discrete Mathematics</strong>, applied in <strong>C++, Java, and SQL</strong> projects. I've also worked with <strong>HTML, CSS, React, and Flutter/Firebase</strong>. Gaming pushes me to build — it's why I made my own car racing game instead of just playing someone else's.</p>
+        <p>I'm currently contributing to a team-based final-year project on an <strong>AI-powered personal air-quality and protection advisory system</strong>, and I'm developing my <strong>Python</strong> and AI skills after completing an AI &amp; Python Engineering course. I'm interested in <strong>scientific computing</strong> and the practical use of emerging technologies in research environments.</p>
       </div>
       <div class="about-card glass spot">
         <div class="fact"><span class="k">SEMESTER</span><span class="v">7th — BS Software Engineering</span></div>
-        <div class="fact"><span class="k">SKILL LEVEL</span><span class="v">Fundamentals — Java, C++, Python, SQL</span></div>
-        <div class="fact"><span class="k">INTERESTS</span><span class="v">Gaming, Coding, Building</span></div>
-        <div class="fact"><span class="k">LOOKING FOR</span><span class="v">Internship in Mobile/Web Dev</span></div>
+        <div class="fact"><span class="k">SKILL LEVEL</span><span class="v">C++, Java, SQL, Web &amp; Flutter; Python in progress</span></div>
+        <div class="fact"><span class="k">INTERESTS</span><span class="v">Scientific Computing, AI, Robotics, Computer Vision</span></div>
+        <div class="fact"><span class="k">LOOKING FOR</span><span class="v">Internships — Software, Scientific Computing, AI</span></div>
       </div>
     </div>
   </div>
@@ -428,23 +424,23 @@
         <div class="dot-status"><span class="d"></span>OPEN TO WORK</div>
         <div>
           <h3>Looking for a Software Engineering internship</h3>
-          <p>Ideally in mobile or web development — happy to talk about any opportunity.</p>
+          <p>Open to software engineering, scientific computing, and applied AI opportunities — including summer programmes in 2027.</p>
         </div>
       </div>
       <div class="cell glass spot">
         <div class="num">01</div>
-        <h3>Learning Python</h3>
-        <p>Recently started via a 3-month course at NAVTEC — currently at the basics stage.</p>
+        <h3>Final-year project</h3>
+        <p>Building an AI-powered air-quality and protection advisor with my team.</p>
       </div>
       <div class="cell glass spot">
         <div class="num">02</div>
-        <h3>Strengthening DSA</h3>
-        <p>Building a stronger grasp of data structures through C++ coursework and practice.</p>
+        <h3>Python &amp; AI</h3>
+        <p>Developing Python skills and learning AI / machine learning fundamentals.</p>
       </div>
       <div class="cell b-wide glass spot">
         <div class="num">03</div>
-        <h3>7th semester coursework</h3>
-        <p>Balancing final-year Software Engineering coursework at SZABIST alongside personal projects.</p>
+        <h3>Coursework &amp; community</h3>
+        <p>7th semester at SZABIST, alongside serving as General Secretary of the GBCC student council.</p>
       </div>
     </div>
   </div>
@@ -454,30 +450,44 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">EDUCATION</div>
-      <h2>Education &amp; Certifications</h2>
-      <p class="section-sub">Formal degree in progress, backed by hands-on courses on the side.</p>
+      <h2>Education &amp; Training</h2>
+      <p class="section-sub">Degree in progress, backed by hands-on training on the side.</p>
     </div>
     <div class="timeline reveal">
       <div class="tl-item">
         <div class="tl-card glass spot">
           <h3>BS Software Engineering</h3>
           <div class="org">SZABIST University — Islamabad Campus</div>
-          <p>Currently in 7th semester, applying coursework in OOP, data structures, and software design directly into personal projects.</p>
+          <p>Currently in 7th semester. Coursework: Data Structures, OOP, Database Systems, Linear Algebra, Calculus, Probability, Discrete Mathematics, AI Fundamentals, and Software Engineering.</p>
           <div class="meta-row">
             <span class="status-pill progress">In Progress</span>
-            <span class="when">Semester 7</span>
+            <span class="when">Sep 2023 – Jun 2027 (expected)</span>
           </div>
         </div>
       </div>
       <div class="tl-item">
         <div class="tl-card glass spot">
-          <h3>Python Programming Course</h3>
+          <h3>AI &amp; Python Engineering Course</h3>
           <div class="org">NAVTEC</div>
-          <p>3-month hands-on course covering Python programming fundamentals.</p>
+          <p>3-month hands-on course covering Python programming and AI fundamentals.</p>
           <div class="meta-row">
-            <span class="status-pill pending">Certificate pending</span>
-            <span class="when">Feb – Apr 2026</span>
+            <span class="status-pill pending">Completed · certificate not yet collected</span>
+            <span class="when">2026</span>
           </div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-card glass spot">
+          <h3>HSSC — Pre-Engineering</h3>
+          <div class="org">Bright Future Public School &amp; College, Gilgit</div>
+          <div class="meta-row"><span class="when">2021 – 2022</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-card glass spot">
+          <h3>SSC — Matriculation</h3>
+          <div class="org">Unity Public School &amp; College, Gilgit</div>
+          <div class="meta-row"><span class="when">2019 – 2020</span></div>
         </div>
       </div>
     </div>
@@ -489,12 +499,21 @@
     <div class="section-head reveal">
       <div class="eyebrow">SELECTED WORK</div>
       <h2>Things I've built and shipped</h2>
-      <p class="section-sub">Three semester projects, each pushed to GitHub — from a conversational Java app to a C++ system built on real data structures.</p>
+      <p class="section-sub">From a team-based AI final-year project to Java and C++ coursework projects pushed to GitHub.</p>
     </div>
 
     <div class="project-list">
       <div class="project-row reveal spot">
         <div class="pnum mono">01</div>
+        <div class="project-main">
+          <h3>AI-Powered Personal Air Quality &amp; Protection Advisor</h3>
+          <p>Final-year team project: an AI-based system that advises individuals about air-quality exposure and suitable protective measures. I contribute to design and development, working with Python and AI-related data processing.</p>
+          <div class="project-tags"><span>Python</span><span>AI</span><span>Team Project</span><span style="color:var(--accent);border-color:var(--accent);">In progress</span></div>
+        </div>
+      </div>
+
+      <div class="project-row reveal spot">
+        <div class="pnum mono">02</div>
         <div class="project-main">
           <h3>Mental Wellness Chatbot</h3>
           <p>A conversational chatbot built to support mental wellness check-ins, developed as a semester project in core Java.</p>
@@ -504,7 +523,7 @@
       </div>
 
       <div class="project-row reveal spot">
-        <div class="pnum mono">02</div>
+        <div class="pnum mono">03</div>
         <div class="project-main">
           <h3>Car Racing Game</h3>
           <p>A desktop car racing game built with Java, Object-Oriented Programming, and Java Swing for the graphical interface.</p>
@@ -514,13 +533,64 @@
       </div>
 
       <div class="project-row reveal spot">
-        <div class="pnum mono">03</div>
+        <div class="pnum mono">04</div>
         <div class="project-main">
           <h3>Society Management System</h3>
           <p>A Society Management System built in C++, applying data structures and OOP concepts to manage residents, records, and requests.</p>
           <div class="project-tags"><span>C++</span><span>DSA</span></div>
           <a class="project-link" href="https://github.com/Sibtain2005/Society-Management-System-Cpp-DSA" target="_blank" rel="noopener">View on GitHub <span class="arrow">↗</span></a>
         </div>
+      </div>
+
+      <div class="project-row reveal spot">
+        <div class="pnum mono">05</div>
+        <div class="project-main">
+          <h3>Relational Database System</h3>
+          <p>Designed and implemented relational database structures with creating, updating, and deleting of tables and records. Applied ER diagrams, normalization, joins, nested queries, and SQL functions to organize data for record management.</p>
+          <div class="project-tags"><span>SQL</span><span>PostgreSQL</span><span>ER Modelling</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="leadership">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">LEADERSHIP &amp; SERVICE</div>
+      <h2>Beyond the code</h2>
+      <p class="section-sub">Community roles, achievements, and languages.</p>
+    </div>
+    <div class="process-grid reveal">
+      <div class="process-card glass spot">
+        <div class="pn mono">CURRENT</div>
+        <h3>General Secretary</h3>
+        <p><strong>Gilgit Baltistan Chitral Council (GBCC), SZABIST.</strong> Supporting council operations, event planning, official coordination, documentation, student welfare, and orientation.</p>
+      </div>
+      <div class="process-card glass spot">
+        <div class="pn mono">FEB 2025 – PRESENT</div>
+        <h3>Student Counselor &amp; Sports Head</h3>
+        <p><strong>Nagar Student Federation, Rawalpindi–Islamabad.</strong> Organizing sports events and tournaments, supporting communications, and contributing to mentorship initiatives.</p>
+      </div>
+      <div class="process-card glass spot">
+        <div class="pn mono">JUN 2025 – PRESENT</div>
+        <h3>Member</h3>
+        <p><strong>Nagar Youth Organization, Gilgit-Baltistan.</strong></p>
+      </div>
+      <div class="process-card glass spot">
+        <div class="pn mono">SEP 2023 – SEP 2025</div>
+        <h3>Member</h3>
+        <p><strong>SZABIST E-Sports Society, Islamabad.</strong></p>
+      </div>
+    </div>
+    <div class="skill-bento reveal" style="margin-top:20px;">
+      <div class="s-cell glass spot">
+        <span class="k">ACHIEVEMENTS</span>
+        <div class="tag-row"><span class="tag hi">Event Management Lead — SZABIST SE departmental event (2025)</span><span class="tag">Best Cricket Player — school &amp; college, Gilgit</span></div>
+      </div>
+      <div class="s-cell glass spot">
+        <span class="k">LANGUAGES</span>
+        <div class="tag-row"><span class="tag">Shina — Native</span><span class="tag">Urdu — Proficient</span><span class="tag">English — Intermediate</span></div>
       </div>
     </div>
   </div>
@@ -564,21 +634,33 @@
       <h2>What I work with</h2>
     </div>
     <div class="skill-bento reveal">
-      <div class="s-cell wide glass spot">
-        <span class="k">LANGUAGES (BASICS)</span>
-        <div class="tag-row"><span class="tag">Java</span><span class="tag">C++</span><span class="tag">Python</span><span class="tag">SQL</span></div>
+      <div class="s-cell glass spot">
+        <span class="k">PROGRAMMING</span>
+        <div class="tag-row"><span class="tag">C++</span><span class="tag">Java</span><span class="tag">JavaScript</span><span class="tag">Python (developing)</span></div>
+      </div>
+      <div class="s-cell glass spot">
+        <span class="k">WEB DEVELOPMENT</span>
+        <div class="tag-row"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">React</span></div>
+      </div>
+      <div class="s-cell glass spot">
+        <span class="k">APP DEVELOPMENT</span>
+        <div class="tag-row"><span class="tag">Flutter</span><span class="tag">Dart</span><span class="tag">Firebase</span></div>
+      </div>
+      <div class="s-cell glass spot">
+        <span class="k">DATABASES</span>
+        <div class="tag-row"><span class="tag">SQL</span><span class="tag">PostgreSQL</span><span class="tag">MS SQL Server</span><span class="tag">SSMS</span></div>
       </div>
       <div class="s-cell glass spot">
         <span class="k">CONCEPTS</span>
-        <div class="tag-row"><span class="tag">OOP (C++)</span><span class="tag">Data Structures</span><span class="tag">Basic Algorithms</span></div>
+        <div class="tag-row"><span class="tag">OOP</span><span class="tag">Data Structures</span><span class="tag">ER Modelling &amp; Normalization</span></div>
       </div>
       <div class="s-cell glass spot">
         <span class="k">TOOLS</span>
-        <div class="tag-row"><span class="tag">Java Swing</span><span class="tag">Git</span><span class="tag">GitHub</span></div>
+        <div class="tag-row"><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">VS Code</span><span class="tag">Java Swing</span></div>
       </div>
       <div class="s-cell wide glass spot">
         <span class="k">CURRENTLY LEARNING</span>
-        <div class="tag-row"><span class="tag hi">Python</span></div>
+        <div class="tag-row"><span class="tag hi">Python</span><span class="tag hi">AI / Machine Learning</span></div>
       </div>
     </div>
   </div>
@@ -588,7 +670,7 @@
   <div class="wrap reveal">
     <div class="eyebrow" style="justify-content:center;">GET IN TOUCH</div>
     <h2 class="display">Let's build <span class="grad">something</span> together.</h2>
-    <p class="sub">Open to internship opportunities in mobile and web development.</p>
+    <p class="sub">Open to internship opportunities in software engineering, scientific computing, and applied AI.</p>
     <div class="contact-links">
       <a href="mailto:abbassibtain01@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg> abbassibtain01@gmail.com</a>
       <a href="https://github.com/Sibtain2005" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.93.57.1.78-.25.78-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.66.79.55A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg> GitHub</a>
@@ -677,30 +759,6 @@
     progressBar.style.width = scrollPct + '%';
     if(h.scrollTop > 40){ navEl.classList.add('scrolled'); } else { navEl.classList.remove('scrolled'); }
   });
-
-  /* ---------------- CUSTOM CURSOR ---------------- */
-  if(hasHover && !reduceMotion){
-    document.body.classList.add('custom-cursor-active');
-    var dot = document.getElementById('cursor-dot');
-    var ring = document.getElementById('cursor-ring');
-    var ringX = 0, ringY = 0, mouseX = 0, mouseY = 0;
-    window.addEventListener('mousemove', function(e){
-      mouseX = e.clientX; mouseY = e.clientY;
-      dot.style.left = mouseX + 'px'; dot.style.top = mouseY + 'px';
-      dot.style.opacity = '1'; ring.style.opacity = '1';
-    });
-    function ringLoop(){
-      ringX += (mouseX - ringX) * 0.18;
-      ringY += (mouseY - ringY) * 0.18;
-      ring.style.left = ringX + 'px'; ring.style.top = ringY + 'px';
-      requestAnimationFrame(ringLoop);
-    }
-    ringLoop();
-    document.querySelectorAll('a, button, .glass, .project-row').forEach(function(el){
-      el.addEventListener('mouseenter', function(){ ring.classList.add('grow'); });
-      el.addEventListener('mouseleave', function(){ ring.classList.remove('grow'); });
-    });
-  }
 
   /* ---------------- SPOTLIGHT CARDS ---------------- */
   if(hasHover){
